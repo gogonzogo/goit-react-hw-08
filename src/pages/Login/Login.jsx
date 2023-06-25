@@ -69,8 +69,8 @@ const Login = () => {
       Notify.success('Success! Logging you in...');
       setFormData({ email: '', password: '' });
       dispatch(clearValidationReqs());
-      dispatch(login({ email, password }));
       navigate('/contacts');
+      dispatch(login({ email, password })); 
     }
   };
 

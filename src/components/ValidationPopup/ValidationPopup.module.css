@@ -1,0 +1,17 @@
+.validationPopup {
+  position: absolute;
+  z-index: 2;
+  padding: 10px 15px;
+  right: 0;
+}
+
+.validationPopupItem {
+  padding: 0;
+}
+
+.validationPopupIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  color: rgb(162, 171, 179);
+}

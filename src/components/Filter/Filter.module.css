@@ -1,0 +1,14 @@
+.filterContainer {
+  margin: 0 auto;
+  width: 300px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.filterTitle {
+  font-weight: 600;
+}
+
+.filterInput {
+  padding: 5px;
+}

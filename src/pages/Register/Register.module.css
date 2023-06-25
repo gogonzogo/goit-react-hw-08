@@ -1,0 +1,16 @@
+.registerForm {
+    position: relative;
+}
+
+.registerSection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerForm {
+    width: 400px;
+    height: 400px;
+}

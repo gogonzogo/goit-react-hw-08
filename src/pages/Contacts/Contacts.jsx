@@ -3,22 +3,34 @@ import { Filter } from 'components/Filter/Filter.jsx';
 import { Sort } from 'components/Sort/Sort.jsx';
 import { ContactList } from 'components/ContactList/ContactList.jsx';
 import css from './Contacts.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchContacts } from 'redux/contacts/contactsOperations.js';
 import { getContacts } from 'redux/contacts/contactsSelectors.js';
+import { fetchContacts } from 'redux/contacts/contactsOperations';
+import { selectIsLoggedIn, selectToken } from 'redux/auth/authSelectors';
 
 export const Contacts = () => {
   const [onMount, setOnMount] = useState(false);
   const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-    setOnMount(false);
-  }, [dispatch]);
+    if (!isLoggedIn) {
+      return;
+    } else {
+      dispatch(fetchContacts());
+      setOnMount(false);
+    }
+    console.log('render')
+  }, [dispatch, isLoggedIn]);
 
-  const contacts = useSelector(getContacts);
+// set contacts to empty array on unmount
+  useEffect(() => {
+    return () => {
+      setOnMount(true);
+    };
+  }, []);
 
   return (
     <section className={css.contacts}>

@@ -19,6 +19,7 @@ import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Login';
 import ValidationPopup from 'components/ValidationPopup/ValidationPopup';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { fetchContacts } from 'redux/contacts/contactsOperations';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,11 +67,11 @@ const Login = () => {
       Notify.warning('Please correct the fields with errors');
       return;
     } else {
+      dispatch(login({ email, password })); 
       Notify.success('Success! Logging you in...');
       setFormData({ email: '', password: '' });
       dispatch(clearValidationReqs());
       navigate('/contacts');
-      dispatch(login({ email, password })); 
     }
   };
 

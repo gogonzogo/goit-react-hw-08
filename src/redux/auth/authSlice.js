@@ -22,6 +22,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
+        console.log(state.token)
       }
       )
       .addCase(register.rejected, (state, action) => {
@@ -33,10 +34,11 @@ const authSlice = createSlice({
       }
       )
       .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.user = action.payload.user;
         state.isRefreshing = false;
+        state.isLoggedIn = true;
+        console.log(`loginFullfilledToken: ${action.payload.token}`)
       }
       )
       .addCase(login.rejected, (state, action) => {
@@ -52,6 +54,7 @@ const authSlice = createSlice({
         state.token = null;
         state.isLoggedIn = false;
         state.isRefreshing = false;
+        console.log(state.token)
       }
       )
       .addCase(logOut.rejected, (state, action) => {
@@ -67,6 +70,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
+        console.log(state.token)
       }
       )
       .addCase(fetchCurrentUser.rejected, (state, action) => {

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "redux/auth/authOperations";
 import { selectUser } from "redux/auth/authSelectors";
+import { clearContacts } from "redux/contacts/contactsSlice";
 
 const UserMenu = () => {
   const dispatch = useDispatch();
@@ -8,6 +9,7 @@ const UserMenu = () => {
 
   const handleClick = () => {
     dispatch(logOut());
+    dispatch(clearContacts());
   };
 
   return (

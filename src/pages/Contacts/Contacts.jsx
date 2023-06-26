@@ -4,23 +4,21 @@ import { Sort } from 'components/Sort/Sort.jsx';
 import { ContactList } from 'components/ContactList/ContactList.jsx';
 import css from './Contacts.module.css';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
 import { useContacts } from 'hooks/useContacts';
 import { useAuth } from 'hooks/useAuth';
 
 export const Contacts = () => {
-  const [onMount, setOnMount] = useState(true);
   const dispatch = useDispatch();
   const { contacts, isLoading } = useContacts();
-  const { isLoggedIn, user, isRefreshing } = useAuth();
+  const { isLoggedIn, user } = useAuth();
 
   useEffect(() => {
     if (!isLoggedIn) {
       return;
     } else {
       dispatch(fetchContacts());
-      setOnMount(false);
     }
   }, [dispatch, isLoggedIn]);
 

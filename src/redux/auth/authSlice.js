@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register, login, logOut, fetchCurrentUser } from './authOperations';
+import { Notify } from 'notiflix';
 
 const initialState = {
   user: { name: null, email: null },
@@ -22,7 +23,6 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
-        console.log(state.token)
       }
       )
       .addCase(register.rejected, (state, action) => {
@@ -38,11 +38,13 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.isRefreshing = false;
         state.isLoggedIn = true;
-        console.log(`loginFullfilledToken: ${action.payload.token}`)
+        Notify.success('Success! Logging you in...');
+        console.log(action.payload.user)
       }
       )
       .addCase(login.rejected, (state, action) => {
         state.isRefreshing = false;
+        Notify.failure('Incorrect email or password');
       }
       )
       .addCase(logOut.pending, (state) => {

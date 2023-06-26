@@ -1,7 +1,7 @@
 import css from './Register.module.css';
 import { useState } from 'react';
 import ValidationPopup from 'components/ValidationPopup/ValidationPopup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   updateValidationReqs,
@@ -21,6 +21,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Login';
 import { register } from 'redux/auth/authOperations';
+import { useValidation } from 'hooks/useValidation';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [focusedField, setFocusedField] = useState('');
   const dispatch = useDispatch();
-  const validationReqs = useSelector(state => state.validation.validationReqs);
+  const { validationReqs } = useValidation();
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -83,7 +84,7 @@ const Register = () => {
       });
       dispatch(clearValidationReqs());
       dispatch(clearFormData());
-      navigate('/login');
+      navigate(`/${name}/contacts`);
     }
   };
 

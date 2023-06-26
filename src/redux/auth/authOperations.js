@@ -41,14 +41,6 @@ export const login = createAsyncThunk(
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts', async (_, thunkAPI) => {
-    // const state = thunkAPI.getState();
-    // const persistedToken = state.auth.token;
-
-    // if (persistedToken === null) {
-    //   return thunkAPI.rejectWithValue();
-    // }
-
-    // token.set(persistedToken);
     console.log(`contactsFetchToken`)
     try {
       const { data } = await axios.get('/contacts');

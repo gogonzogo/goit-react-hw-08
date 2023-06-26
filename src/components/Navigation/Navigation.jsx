@@ -8,15 +8,14 @@ import ContactsIcon from '@mui/icons-material/Contacts';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink } from 'react-router-dom';
 import css from './Navigation.module.css';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from 'redux/auth/authSelectors';
+import { useAuth } from 'hooks/useAuth';
 
 const Navigation = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const { isLoggedIn } = useAuth();
 
-  const loggedInIcon = isLoggedIn ? <MenuIcon /> : <LockIcon />
-  const loggedInLabel = isLoggedIn ? 'User Menu' : 'Login'
-  const loggedInTo = isLoggedIn ? 'usermenu' : 'login'
+  const loggedInIcon = isLoggedIn ? <MenuIcon /> : <LockIcon />;
+  const loggedInLabel = isLoggedIn ? 'User Menu' : 'Login';
+  const loggedInTo = isLoggedIn ? 'usermenu' : 'login';
 
   return (
     <nav className={css.navigation}>
@@ -28,12 +27,14 @@ const Navigation = () => {
             label="Home"
             icon={<HomeIcon />}
           />
-          { !isLoggedIn && <BottomNavigationAction
-            component={NavLink}
-            to={'register'}
-            label="Register"
-            icon={<FaceIcon />}
-          />}
+          {!isLoggedIn && (
+            <BottomNavigationAction
+              component={NavLink}
+              to={'register'}
+              label="Register"
+              icon={<FaceIcon />}
+            />
+          )}
           <BottomNavigationAction
             component={NavLink}
             to={loggedInTo}

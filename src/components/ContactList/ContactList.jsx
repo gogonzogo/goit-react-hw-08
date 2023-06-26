@@ -2,23 +2,18 @@ import css from './ContactList.module.css';
 import ContentEditable from 'react-contenteditable';
 // import sanitize from 'sanitize-html';
 import { useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateContact } from 'redux/contacts/contactsOperations';
 import { sortContactsList, filterContactsList } from 'services/contactListFunc';
 import { Buttons } from 'components/Buttons/Buttons';
-import {
-  getContacts,
-  getFilter,
-  getSortOptions,
-} from 'redux/contacts/contactsSelectors';
+import { Notify } from 'notiflix';
+import { useContacts } from 'hooks/useContacts';
 
 export const ContactList = () => {
   const [editableContactId, setEditableContactId] = useState(null);
   const editedContactsRef = useRef({});
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
-  const sortOptions = useSelector(getSortOptions);
+  const { contacts, filter, sortOptions } = useContacts();
   const sortedContacts = sortContactsList(contacts, sortOptions);
   const filteredContacts = filterContactsList(sortedContacts, filter);
 
@@ -35,11 +30,25 @@ export const ContactList = () => {
   };
 
   const handleSaveClick = id => {
-    dispatch(
-      updateContact({ editedContact: editedContactsRef.current[id] })
+    const contactsToCompare = contacts.filter(contact => contact.id !== id);
+
+    const existingContact = contactsToCompare.find(
+      contact =>
+        contact.name.toLowerCase() ===
+          editedContactsRef.current[id].name.toLowerCase() ||
+        contact.number === editedContactsRef.current[id].number
     );
-    setEditableContactId(null);
-    editedContactsRef.current = {};
+
+    if (existingContact) {
+      Notify.failure(
+        `${editedContactsRef.current[id].name} is already in contacts. Please check and resubmit`
+      );
+      return;
+    } else {
+      dispatch(updateContact({ editedContact: editedContactsRef.current[id] }));
+      setEditableContactId(null);
+      editedContactsRef.current = {};
+    }
   };
 
   const handleContactChange = (e, id) => {

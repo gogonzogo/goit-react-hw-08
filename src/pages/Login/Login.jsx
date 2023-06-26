@@ -1,7 +1,7 @@
 import css from './Login.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   updateValidationReqs,
   clearValidationReqs,
@@ -19,6 +19,7 @@ import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Login';
 import ValidationPopup from 'components/ValidationPopup/ValidationPopup';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { useValidation } from 'hooks/useValidation';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +30,7 @@ const Login = () => {
   const { email, password } = formData;
   const [focusedField, setFocusedField] = useState('');
   const dispatch = useDispatch();
-  const validationReqs = useSelector(state => state.validation.validationReqs);
+  const { validationReqs } = useValidation();
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -50,37 +51,16 @@ const Login = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const userEmail = Object.values(validationReqs.email);
-    const userPassword = Object.values(validationReqs.password);
-    const isEmailValid = userEmail.map(el =>
-      Object.values(el).every(el => el.met === true)
-    );
-    const isPasswordValid = userPassword.map(el =>
-      Object.values(el).every(el => el.met === true)
-    );
-
     if (!email || !password) {
       Notify.warning('Please fill in all the fields');
       return;
-    } else if (!isEmailValid || !isPasswordValid) {
-      Notify.warning('Please correct the fields with errors');
-      return;
     } else {
-      dispatch(login({ email, password })); 
-      Notify.success('Success! Logging you in...');
-      setFormData({ email: '', password: '' });
+      dispatch(login({ email, password })).then(() => {
+        navigate('/contacts');
+      });
       dispatch(clearValidationReqs());
-      navigate('/contacts');
     }
   };
-
-  Notify.init({
-    position: 'center-center',
-    distance: '15px',
-    timeout: 1000,
-    showOnlyTheLastOne: true,
-    fontSize: '20px',
-  });
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
 
@@ -94,6 +74,7 @@ const Login = () => {
         <TextField
           id="email"
           label="Email"
+          autoComplete="off"
           variant="standard"
           fullWidth
           size="large"

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getContacts } from 'redux/contacts/contactsSelectors.js';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
-import { selectIsLoggedIn, selectToken } from 'redux/auth/authSelectors';
+import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 
 export const Contacts = () => {
   const [onMount, setOnMount] = useState(false);

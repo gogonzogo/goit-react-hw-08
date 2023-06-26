@@ -19,7 +19,6 @@ import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Login';
 import ValidationPopup from 'components/ValidationPopup/ValidationPopup';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { fetchContacts } from 'redux/contacts/contactsOperations';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);

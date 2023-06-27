@@ -24,7 +24,7 @@ export const Contacts = () => {
 
   return (
     <section className={css.contacts}>
-      <h1 className={css.contactsTitle}>{`${user.name} Contacts`}</h1>
+      {!isLoading && <h1 className={css.contactsTitle}>{`${user.name} Contacts`}</h1>}
       <ContactForm />
       {isLoading && <h5>Loading...</h5>}
       { contacts.length >= 2 ? (

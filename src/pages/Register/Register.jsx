@@ -71,20 +71,19 @@ const Register = () => {
       Notify.warning('Please fill in all the fields');
       return;
     } else if (!isValid) {
-      Notify.warning('Please correct the fields with errors');
-      return;
+      Notify.warning('Please check fields with errors');
     } else {
-      Notify.success('Success! You are registered');
-      dispatch(register({ name, email, password }));
-      setFormData({
-        name: '',
-        email: '',
-        password: '',
-        password2: '',
-      });
-      dispatch(clearValidationReqs());
-      dispatch(clearFormData());
-      navigate(`/contacts`);
+      dispatch(register({ name, email, password }))
+        .then(action => {
+          if (!action.error) {
+            dispatch(clearValidationReqs());
+            dispatch(clearFormData());
+            navigate('/contacts');
+          } 
+        })
+        .catch(() => {
+          Notify.failure('Registration failure');
+        });
     }
   };
 

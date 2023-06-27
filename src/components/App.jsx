@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import Navigation from 'components/Navigation/Navigation';
 import Paper from '@mui/material/Paper';
 import PrivateRoute from './PrivateRoute';
+import { Notify } from 'notiflix';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Login = lazy(() => import('pages/Login/Login'));
@@ -49,3 +50,12 @@ export const App = () => {
 };
 
 export default App;
+
+
+Notify.init({
+  position: 'center-center',
+  distance: '15px',
+  timeout: 1000,
+  showOnlyTheLastOne: true,
+  fontSize: '20px',
+});

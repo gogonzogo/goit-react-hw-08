@@ -3,7 +3,7 @@ import { register, login, logOut } from './authOperations';
 import { Notify } from 'notiflix';
 
 const initialState = {
-  user: { name: null, email: null },
+  user: { name: '', email: '' },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -23,10 +23,16 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
+        Notify.success('Success! You are registered');
       }
       )
       .addCase(register.rejected, (state, action) => {
         state.isRefreshing = false;
+        if (action.payload.includes('400')) {
+          Notify.failure('Email already exists');
+        } else {
+          Notify.failure('Server error, please try again');
+        }
       }
       )
       .addCase(login.pending, (state) => {

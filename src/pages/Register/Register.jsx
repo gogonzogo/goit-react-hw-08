@@ -84,7 +84,7 @@ const Register = () => {
       });
       dispatch(clearValidationReqs());
       dispatch(clearFormData());
-      navigate(`/${name}/contacts`);
+      navigate(`/contacts`);
     }
   };
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register, login, logOut, fetchCurrentUser } from './authOperations';
+import { register, login, logOut } from './authOperations';
 import { Notify } from 'notiflix';
 
 const initialState = {
@@ -39,7 +39,6 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.isLoggedIn = true;
         Notify.success('Success! Logging you in...');
-        console.log(action.payload.user)
       }
       )
       .addCase(login.rejected, (state, action) => {
@@ -56,26 +55,10 @@ const authSlice = createSlice({
         state.token = null;
         state.isLoggedIn = false;
         state.isRefreshing = false;
-        console.log(state.token)
+        Notify.success('Success! Logged Out!');
       }
       )
       .addCase(logOut.rejected, (state, action) => {
-        state.isRefreshing = false;
-      }
-      )
-      .addCase(fetchCurrentUser.pending, (state) => {
-        state.isRefreshing = true;
-      }
-      )
-      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
-        console.log(state.token)
-      }
-      )
-      .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.isRefreshing = false;
       }
       )

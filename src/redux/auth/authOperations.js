@@ -31,7 +31,6 @@ export const login = createAsyncThunk(
     try {
       const { data } = await axios.post("/users/login", credentials);
       token.set(data.token);
-      console.log(`loginToken: ${data.token}`)
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -41,7 +40,6 @@ export const login = createAsyncThunk(
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts', async (_, thunkAPI) => {
-    console.log(`contactsFetchToken`)
     try {
       const { data } = await axios.get('/contacts');
       return data;
@@ -62,25 +60,3 @@ export const logOut = createAsyncThunk(
     }
   }
 );
-
-export const fetchCurrentUser = createAsyncThunk(
-  "auth/refresh",
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
-
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue();
-    }
-
-    token.set(persistedToken);
-
-    try {
-      const { data } = await axios.get("/users/current");
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-

@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/936.7a1d6b7b.chunk.css","mappings":"AAAA,0BAGI,kBAAmB,CAFnB,YAAa,CACb,qBAAsB,CAGtB,aAAc,CADd,WAEJ","sources":["pages/Home/Home.module.css"],"sourcesContent":[".registerForm {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    width: 400px;\n    margin: 0 auto;\n}"],"names":[],"sourceRoot":""}

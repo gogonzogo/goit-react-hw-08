@@ -1,7 +1,7 @@
 export const sortContactsList = (contacts, sortOptions) => {
   const { name, order } = sortOptions;
-  let sortName = name ? 'lastName' : 'firstName';
-  let sortOrder = order ? 'desc' : 'asc';
+  let sortName = name;
+  let sortOrder = order;
   const sortedContacts = [...contacts].sort((a, b) => {
     let nameA;
     let nameB;

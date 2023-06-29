@@ -9,7 +9,7 @@ const initialState = {
     error: null,
   },
   filter: '',
-  sortOptions: { name: false, order: false },
+  sortOptions: { name: 'firstName', order: 'asc' },
 }
 
 export const contactsSlice = createSlice({

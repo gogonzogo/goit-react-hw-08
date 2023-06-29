@@ -1,6 +1,6 @@
-import { ContactForm } from 'components/ContactForm/ContactForm.jsx';
-import { Filter } from 'components/Filter/Filter.jsx';
-import { Sort } from 'components/Sort/Sort.jsx';
+import { ContactsForm } from 'components/ContactsForm/ContactsForm.jsx';
+import { ContactsFilter } from 'components/ContactsFilter/ContactsFilter.jsx';
+import { ContactsSort } from 'components/ContactsSort/ContactsSort.jsx';
 import { ContactList } from 'components/ContactList/ContactList.jsx';
 import css from './Contacts.module.css';
 import { useDispatch } from 'react-redux';
@@ -23,14 +23,16 @@ export const Contacts = () => {
   }, [dispatch, isLoggedIn]);
 
   return (
-    <section className={css.contacts}>
-      {!isLoading && <h1 className={css.contactsTitle}>{`${user.name} Contacts`}</h1>}
-      <ContactForm />
+    <section className={css.phonebook}>
+      {!isLoading && (
+        <h1 className={css.contactsTitle}>{`${user.name} Contacts`}</h1>
+      )}
+      <ContactsForm />
       {isLoading && <h5>Loading...</h5>}
-      { contacts.length >= 2 ? (
+      {contacts.length >= 2 ? (
         <>
-          <Filter />
-          <Sort />
+          <ContactsFilter />
+          <ContactsSort />
           <ContactList />
         </>
       ) : contacts.length === 1 ? (
@@ -40,7 +42,6 @@ export const Contacts = () => {
           No contacts found. Complete the above form to begin adding contacts.
         </h5>
       ) : null}
-
     </section>
   );
 };

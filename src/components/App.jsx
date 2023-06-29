@@ -20,8 +20,8 @@ export const App = () => {
           elevation={3}
           style={{
             padding: '20px',
-            maxWidth: '500px',
-            maxHeight: '100vh',
+            maxWidth: '80%',
+            maxHeight: '100%',
             margin: '40px auto',
           }}
         >

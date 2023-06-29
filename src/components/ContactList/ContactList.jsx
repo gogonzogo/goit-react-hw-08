@@ -5,9 +5,10 @@ import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateContact } from 'redux/contacts/contactsOperations';
 import { sortContactsList, filterContactsList } from 'services/contactListFunc';
-import { Buttons } from 'components/Buttons/Buttons';
 import { Notify } from 'notiflix';
 import { useContacts } from 'hooks/useContacts';
+import Action from 'components/ContactsItemsActions/ContactsItemActions';
+import { Paper } from '@mui/material';
 
 export const ContactList = () => {
   const [editableContactId, setEditableContactId] = useState(null);
@@ -60,72 +61,57 @@ export const ContactList = () => {
 
   return (
     <section className={css.contactsListSection}>
-      <table className={css.contactsTable}>
-        <thead>
-          <tr>
-            <th colSpan={3}>
-              <h1>Contacts</h1>
-            </th>
-          </tr>
-          <tr>
-            <th>Name</th>
-            <th>Number</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredContacts.length > 0 ? (
-            <>
-              {filteredContacts.map(contact => (
-                <tr key={contact.id}>
-                  <td>
-                    {' '}
-                    {editableContactId === contact.id ? (
-                      <ContentEditable
-                        className={css.editableContact}
-                        html={contact.name}
-                        disabled={false}
-                        data-value="name"
-                        onChange={e => handleContactChange(e, contact.id)}
-                      />
-                    ) : (
-                      contact.name
-                    )}
-                  </td>
-                  <td>
-                    {editableContactId === contact.id ? (
-                      <ContentEditable
-                        className={css.editableContact}
-                        html={contact.number}
-                        disabled={false}
-                        data-value="number"
-                        onChange={e => handleContactChange(e, contact.id)}
-                      />
-                    ) : (
-                      contact.number
-                    )}
-                  </td>
-                  <td>
-                    <Buttons
-                      contactId={contact.id}
-                      editableContactId={editableContactId}
-                      handleEditClick={handleEditClick}
-                      handleCancelClick={handleCancelClick}
-                      handleSaveClick={handleSaveClick}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </>
-          ) : (
-            <tr>
-              <td colSpan={3} className={css.noContacts}>
-                No contacts meet search criteria.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <Paper elevation={6} sx={{padding: "15px"}} >
+      <ul className={css.contactList}>
+        {filteredContacts.length > 0 ? (
+          filteredContacts.map(contact => (
+            <li key={contact.id} className={css.contactListItem}>
+              <span className={css.contactName}>
+                {editableContactId === contact.id ? (
+                  <ContentEditable
+                    className={css.editableContact}
+                    html={contact.name}
+                    disabled={false}
+                    data-value="name"
+                    onChange={e => handleContactChange(e, contact.id)}
+                  />
+                ) : (
+                  contact.name
+                )}
+              </span>
+              <span className={css.contactNumber}>
+                {editableContactId === contact.id ? (
+                  <ContentEditable
+                    className={css.editableContact}
+                    html={contact.number}
+                    disabled={false}
+                    data-value="number"
+                    onChange={e => handleContactChange(e, contact.id)}
+                  />
+                ) : (
+                  contact.number
+                )}
+              </span>
+              <span className={css.contactAction}>
+                <Action
+                  contactId={contact.id}
+                  editableContactId={editableContactId}
+                  handleEditClick={handleEditClick}
+                  handleCancelClick={handleCancelClick}
+                  handleSaveClick={handleSaveClick}
+                />
+              </span>
+            </li>
+          ))
+        ) : (
+          <li className={css.noContactsItem}>
+            <p colSpan={3} className={css.noContactsText}>
+              No contacts meet search criteria.
+            </p>
+          </li>
+        )}
+      </ul>
+      </Paper>
     </section>
   );
 };

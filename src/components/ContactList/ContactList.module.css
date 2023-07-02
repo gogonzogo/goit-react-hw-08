@@ -6,7 +6,7 @@
 .contactListItem {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   justify-content: space-evenly;
   border-bottom-style: dashed;
   border-bottom-width: 2px;

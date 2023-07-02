@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact, updateContact } from './contactsOperations';
+import { Notify } from 'notiflix';
 
 
 const initialState = {
@@ -10,7 +11,13 @@ const initialState = {
   },
   filter: '',
   sortOptions: { name: 'firstName', order: 'asc' },
+  phonebookOptions: {
+    addContact: false,
+    sortContacts: false,
+    filterContacts: false,
+  }
 }
+
 
 export const contactsSlice = createSlice({
   name: 'contacts',
@@ -24,6 +31,9 @@ export const contactsSlice = createSlice({
     },
     clearContacts: (state) => {
       state.contacts.items = [];
+    },
+    updatePhonebookOptions: (state, action) => {
+      state.phonebookOptions = action.payload;
     },
   },
   extraReducers: builder => {
@@ -40,6 +50,7 @@ export const contactsSlice = createSlice({
         state.contacts.isLoading = false;
         state.contacts.error = action.payload;
         state.contacts.items = [];
+        Notify.failure('Server Error! Contacts are not loaded! Please, try again later.');
       })
       .addCase(addContact.pending, (state) => {
         state.contacts.isLoading = true;
@@ -52,6 +63,7 @@ export const contactsSlice = createSlice({
       .addCase(addContact.rejected, (state, action) => {
         state.contacts.isLoading = false;
         state.contacts.error = action.payload;
+        Notify.failure('Server Error! Contact is not added! Please, try again later.');
       })
       .addCase(updateContact.pending, (state) => {
         state.contacts.isLoading = true;
@@ -67,6 +79,7 @@ export const contactsSlice = createSlice({
       .addCase(updateContact.rejected, (state, action) => {
         state.contacts.isLoading = false;
         state.contacts.error = action.payload;
+        Notify.failure('Server Error! Contact is not updated! Please, try again later.');
       })
       .addCase(deleteContact.pending, (state) => {
         state.contacts.isLoading = true;
@@ -79,9 +92,10 @@ export const contactsSlice = createSlice({
       .addCase(deleteContact.rejected, (state, action) => {
         state.contacts.isLoading = false;
         state.contacts.error = action.payload;
+        Notify.failure('Server Error! Contact is not deleted! Please, try again later.');
       })
   }
 })
 
-export const { sortContacts, filterContacts, clearContacts } = contactsSlice.actions;
+export const { sortContacts, filterContacts, clearContacts, updatePhonebookOptions } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

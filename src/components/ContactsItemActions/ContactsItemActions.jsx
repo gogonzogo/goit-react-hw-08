@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import StyledSpeedDial from '@mui/material/SpeedDial';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,34 +20,86 @@ const actions = [
   { icon: <DeleteForeverIcon />, tooltip: 'Delete' },
 ];
 
-export default function ContactsItemActions({
+export function ContactsItemActions({
   editableContactId,
   contactId,
+  editSaveError,
   handleSaveClick,
   handleEditClick,
   handleCancelClick,
 }) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [actionClicked, setActionClicked] = useState(false);
   const dispatch = useDispatch();
+  const errorRef = useRef(null);
+
+  const handleActionEvent = e => {
+    try {
+      if (e.type === 'mouseleave' && actionClicked) {
+        return;
+      } else if (e.type === 'mouseleave' && !actionClicked) {
+        setOpen(false);
+        return;
+      } else if (e.type === 'mouseenter') {
+        setOpen(true);
+        return;
+      } else if (e.type === 'click') {
+        const target = e.target.closest('svg').dataset.testid;
+
+        switch (target) {
+          case 'EditIcon':
+            setOpen(false);
+            setActionClicked(false);
+            break;
+          case 'AddIcon':
+            setOpen(true);
+            setActionClicked(true);
+            break;
+          case 'SaveIcon':
+            setOpen(false);
+            setActionClicked(false);
+            break;
+          case 'CancelIcon':
+            setOpen(false);
+            setActionClicked(false);
+            break;
+          case 'DeleteIcon':
+            setOpen(false);
+            setActionClicked(false);
+            break;
+          case 'EditNoteIcon':
+            setOpen(true);
+            setActionClicked(true);
+            break;
+          default:
+            return;
+        }
+      }
+    } catch (error) {
+      errorRef.current = error;
+    }
+  };
+
 
   return (
     <Box sx={{}}>
       <StyledSpeedDial
         sx={{ position: 'relative' }}
         ariaLabel="SpeedDial tooltip example"
+        id="speedDial"
         className={css.speedDial}
         icon={<SpeedDialIcon openIcon={<EditIcon />} />}
         direction="left"
-        onClose={handleClose}
-        onOpen={handleOpen}
+        onOpen={handleActionEvent}
+        onClose={handleActionEvent}
+        onClick={handleActionEvent}
         open={open}
       >
         {editableContactId === contactId
           ? [
               <SpeedDialAction
                 key="save"
+                id="save"
                 className={css.contactItemBtn}
                 icon={actions[1].icon}
                 tooltipTitle={actions[1].tooltip}
@@ -56,6 +109,7 @@ export default function ContactsItemActions({
               />,
               <SpeedDialAction
                 key="cancel"
+                id="cancel"
                 className={css.contactItemBtn}
                 icon={actions[2].icon}
                 tooltipTitle={actions[2].tooltip}
@@ -67,6 +121,7 @@ export default function ContactsItemActions({
           : [
               <SpeedDialAction
                 key="edit"
+                id="edit"
                 className={css.contactItemBtn}
                 icon={actions[0].icon}
                 tooltipTitle={actions[0].tooltip}
@@ -76,6 +131,7 @@ export default function ContactsItemActions({
               />,
               <SpeedDialAction
                 key="delete"
+                id="delete"
                 className={css.contactItemBtn}
                 icon={actions[3].icon}
                 tooltipTitle={actions[3].tooltip}
@@ -88,3 +144,11 @@ export default function ContactsItemActions({
     </Box>
   );
 }
+
+ContactsItemActions.propTypes = {
+  editableContactId: PropTypes.string,
+  contactId: PropTypes.string.isRequired,
+  handleSaveClick: PropTypes.func.isRequired,
+  handleEditClick: PropTypes.func.isRequired,
+  handleCancelClick: PropTypes.func.isRequired,
+};

@@ -28,3 +28,21 @@ export const filterContactsList = (sortedContacts, filter) => {
     contact.number.includes(normalizedFilter)
   );
 };
+
+export const isNameOrNumEdited = (contacts, id, editedContactRef) => {
+  const contact = contacts.find(contact => contact.id === id);
+  const { name, number } = contact;
+  const { name: editedName, number: editedNumber } = editedContactRef.current[id];
+
+  const isNameEdited = name !== editedName;
+  const isNumberEdited = number !== editedNumber;
+
+  return { isNameEdited, isNumberEdited };
+}
+
+export const isNameOrNumAvail = (contacts, editedContactRef, id) => {
+  const { name, number } = editedContactRef.current[id];
+  const isNameAvail = contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase());
+  const isNumAvail = contacts.some(contact => contact.number === number);
+  return { isNameAvail, isNumAvail };
+}

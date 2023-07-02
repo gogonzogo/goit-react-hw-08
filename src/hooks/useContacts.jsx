@@ -5,6 +5,7 @@ import {
   getSortOptions,
   getError,
   getIsLoading,
+  getPhonebookOptions,
 } from 'redux/contacts/contactsSelectors';
 
 export const useContacts = () => {
@@ -13,6 +14,7 @@ export const useContacts = () => {
   const sortOptions = useSelector(getSortOptions);
   const error = useSelector(getError);
   const isLoading = useSelector(getIsLoading);
+  const phonebookOptions = useSelector(getPhonebookOptions);
 
   return {
     contacts,
@@ -20,5 +22,6 @@ export const useContacts = () => {
     sortOptions,
     error,
     isLoading,
+    phonebookOptions,
   };
 };

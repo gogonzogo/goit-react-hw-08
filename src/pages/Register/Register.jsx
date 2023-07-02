@@ -87,13 +87,21 @@ const Register = () => {
     }
   };
 
+  Notify.init({
+    position: 'center-center',
+    distance: '15px',
+    timeout: 1000,
+    showOnlyTheLastOne: true,
+    fontSize: '20px',
+  });
+
   return (
     <section className={css.registerSection}>
       <form className={css.registerForm}>
         <TextField
           sx={{ marginTop: '20px' }}
           id="name"
-          label="Username"
+          label="Name"
           variant="standard"
           fullWidth
           size="large"

@@ -4,8 +4,7 @@ const initialState = {
   validationReqs: {
     name: [
       { req1: { id: 1, message: 'Between 7-20 alphanumeric characters', met: false } },
-      { req2: { id: 2, message: 'No Spaces', met: true } },
-      { req3: { id: 3, message: 'No special characters', met: true } },
+      { req2: { id: 2, message: 'No special characters', met: true } },
     ],
     password: [
       { req1: { id: 1, message: 'Between 8-20 alphanumeric characters', met: false } },
@@ -70,9 +69,6 @@ export const validationSlice = createSlice({
                 req.met = fieldValue.length >= 7 && fieldValue.length <= 20;
                 break;
               case 'req2':
-                req.met = !/\s/.test(fieldValue);
-                break;
-              case 'req3':
                 req.met = !/[^\w\s]/.test(fieldValue);
                 break;
               default:

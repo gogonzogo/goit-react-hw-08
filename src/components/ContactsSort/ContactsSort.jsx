@@ -11,14 +11,15 @@ import TextRotationDownIcon from '@mui/icons-material/TextRotationDown';
 import { sortContacts } from 'redux/contacts/contactsSlice';
 import { useDispatch } from 'react-redux';
 import { Box } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 export function ContactsSort() {
   const [sortMethod, setSortMethod] = useState({
     name: 'firstName',
     order: 'asc',
   });
-  const [optionAlignment, setOptionAlignment] = useState('left');
-  const [orderAlignment, setOrderAlignment] = useState('left');
+  const [sortOption, setSortOption] = useState('left');
+  const [orderOption, setOrderOption] = useState('left');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,28 +31,28 @@ export function ContactsSort() {
 
     switch (target) {
       case 'firstName':
-        setOptionAlignment('left');
+        setSortOption('left');
         setSortMethod(prevState => ({
           ...prevState,
           name: 'firstName',
         }));
         break;
       case 'lastName':
-        setOptionAlignment('right');
+        setSortOption('right');
         setSortMethod(prevState => ({
           ...prevState,
           name: 'lastName',
         }));
         break;
       case 'asc':
-        setOrderAlignment('left');
+        setOrderOption('left');
         setSortMethod(prevState => ({
           ...prevState,
           order: 'asc',
         }));
         break;
       case 'desc':
-        setOrderAlignment('right');
+        setOrderOption('right');
         setSortMethod(prevState => ({
           ...prevState,
           order: 'desc',
@@ -75,16 +76,20 @@ export function ContactsSort() {
         <ToggleButtonGroup
           color="primary"
           size="small"
-          value={optionAlignment}
+          value={sortOption}
           exclusive
           onChange={handleChange}
           aria-label="text alignment"
         >
           <ToggleButton id="firstName" value="left" aria-label="left aligned">
-            <FirstPageIcon />
+            <Tooltip title="First Name" placement="top">
+              <FirstPageIcon />
+            </Tooltip>
           </ToggleButton>
           <ToggleButton id="lastName" value="right" aria-label="right aligned">
-            <LastPageIcon />
+            <Tooltip title="Last Name" placement="top">
+              <LastPageIcon />
+            </Tooltip>
           </ToggleButton>
         </ToggleButtonGroup>
         <Divider
@@ -96,16 +101,20 @@ export function ContactsSort() {
         <ToggleButtonGroup
           color="primary"
           size="small"
-          value={orderAlignment}
+          value={orderOption}
           exclusive
           onChange={handleChange}
           aria-label="text alignment"
         >
           <ToggleButton id="asc" value="left" aria-label="left aligned">
-            <TextRotationDownIcon />
+            <Tooltip title="Ascending" placement="top">
+              <TextRotationDownIcon />
+            </Tooltip>
           </ToggleButton>
           <ToggleButton id="desc" value="right" aria-label="right aligned">
-            <TextRotateUpIcon />
+            <Tooltip title="Descending" placement="top">
+              <TextRotateUpIcon />
+            </Tooltip>
           </ToggleButton>
         </ToggleButtonGroup>
       </Paper>

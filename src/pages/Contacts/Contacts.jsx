@@ -4,43 +4,53 @@ import { ContactsSort } from 'components/ContactsSort/ContactsSort.jsx';
 import { ContactList } from 'components/ContactList/ContactList.jsx';
 import css from './Contacts.module.css';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
 import { useContacts } from 'hooks/useContacts';
 import { useAuth } from 'hooks/useAuth';
+import Loader from 'components/Loader/Loader';
+import { PhonebookActions } from 'components/PhonebookActions/PhonebookActions';
 
 export const Contacts = () => {
   const dispatch = useDispatch();
-  const { contacts, isLoading } = useContacts();
+  const [onMount, setOnMount] = useState(true);
+  const { contacts, isLoading, phonebookOptions } = useContacts();
   const { isLoggedIn, user } = useAuth();
+  const { addContact, sortContacts, filterContacts } = phonebookOptions;
 
   useEffect(() => {
     if (!isLoggedIn) {
       return;
     } else {
-      dispatch(fetchContacts());
+      dispatch(fetchContacts()).then(() => setOnMount(false));
     }
   }, [dispatch, isLoggedIn]);
 
   return (
     <section className={css.phonebook}>
-      {!isLoading && (
-        <h1 className={css.contactsTitle}>{`${user.name} Contacts`}</h1>
-      )}
-      <ContactsForm />
-      {isLoading && <h5>Loading...</h5>}
+      <h1 className={css.contactsTitle}>{`${user.name} Contacts`}</h1>
+
+      {onMount && <Loader />}
       {contacts.length >= 2 ? (
         <>
-          <ContactsFilter />
-          <ContactsSort />
+          <PhonebookActions />
+          {addContact && <ContactsForm />}
+          {filterContacts && <ContactsFilter />}
+          {sortContacts && <ContactsSort />}
           <ContactList />
         </>
       ) : contacts.length === 1 ? (
-        <ContactList />
+        <>
+          <ContactsForm />
+          <ContactList />
+        </>
       ) : contacts.length < 1 && !isLoading ? (
-        <h5>
-          No contacts found. Complete the above form to begin adding contacts.
-        </h5>
+        <>
+          <ContactsForm />
+          <h5 className={css.noContactsText}>
+            No contacts found. Complete the above form to begin adding contacts.
+          </h5>
+        </>
       ) : null}
     </section>
   );

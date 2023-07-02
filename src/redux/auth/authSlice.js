@@ -48,6 +48,7 @@ const authSlice = createSlice({
       }
       )
       .addCase(login.rejected, (state, action) => {
+        console.log(action.payload)
         state.isRefreshing = false;
         Notify.failure('Incorrect email or password');
       }
@@ -66,6 +67,7 @@ const authSlice = createSlice({
       )
       .addCase(logOut.rejected, (state, action) => {
         state.isRefreshing = false;
+        Notify.failure('Server error, please try again.');
       }
       )
   },

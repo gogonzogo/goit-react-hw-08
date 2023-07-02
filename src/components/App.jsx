@@ -4,6 +4,8 @@ import Navigation from 'components/Navigation/Navigation';
 import Paper from '@mui/material/Paper';
 import PrivateRoute from './PrivateRoute';
 import { Notify } from 'notiflix';
+import PublicRoute from './PublicRoute';
+import Loader from './Loader/Loader';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Login = lazy(() => import('pages/Login/Login'));
@@ -15,7 +17,7 @@ export const App = () => {
   return (
     <>
       <Navigation />
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={<Loader/>}>
         <Paper
           elevation={3}
           style={{
@@ -27,7 +29,12 @@ export const App = () => {
         >
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute redirectTo="/contacts" component={<Login />} />
+              }
+            />
             <Route path="/register" element={<Register />} />
             <Route
               path="/contacts"
@@ -55,7 +62,7 @@ export default App;
 Notify.init({
   position: 'center-center',
   distance: '15px',
-  timeout: 1000,
+  timeout: 1500,
   showOnlyTheLastOne: true,
   fontSize: '20px',
 });

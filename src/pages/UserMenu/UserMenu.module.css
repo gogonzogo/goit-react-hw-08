@@ -1,0 +1,9 @@
+.userMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userMenuTitle {
+  margin-bottom: 20px;
+}

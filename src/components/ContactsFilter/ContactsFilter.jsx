@@ -29,7 +29,7 @@ export function ContactsFilter() {
         label="Filter Name or Number"
         id="outlined-start-adornment"
         sx={{ width: '100%' }}
-        variant="filled"
+
         onChange={onChange}
         value={state.input}
         InputProps={{

@@ -51,7 +51,7 @@ export function ContactsItemActions({
             setOpen(false);
             setActionClicked(false);
             break;
-          case 'AddIcon':
+          case 'SpeedDialIcon':
             setOpen(true);
             setActionClicked(true);
             break;

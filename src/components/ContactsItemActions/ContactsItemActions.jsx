@@ -45,15 +45,15 @@ export function ContactsItemActions({
         return;
       } else if (e.type === 'click') {
         const target = e.target.closest('svg').dataset.testid;
-
+        console.log('target', target)
         switch (target) {
           case 'EditIcon':
-            setOpen(false);
-            setActionClicked(false);
-            break;
-          case 'SpeedDialIcon':
             setOpen(true);
             setActionClicked(true);
+            break;
+          case 'AddIcon':
+            setOpen(false);
+            setActionClicked(false);
             break;
           case 'SaveIcon':
             setOpen(false);

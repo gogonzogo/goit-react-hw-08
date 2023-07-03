@@ -14,7 +14,7 @@ import { PhonebookActions } from 'components/PhonebookActions/PhonebookActions';
 export const Contacts = () => {
   const dispatch = useDispatch();
   const [onMount, setOnMount] = useState(true);
-  const { contacts, isLoading, phonebookOptions } = useContacts();
+  const { contacts, phonebookOptions } = useContacts();
   const { isLoggedIn, user } = useAuth();
   const { addContact, sortContacts, filterContacts } = phonebookOptions;
 

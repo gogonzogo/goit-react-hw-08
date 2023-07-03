@@ -45,7 +45,6 @@ export const ContactList = () => {
   };
 
   const handleSaveClick = id => {
-    console.log(editedContactsRef.current[id].name);
     if (
       editedContactsRef.current[id].name === '' ||
       editedContactsRef.current[id].number === '' ||
@@ -102,7 +101,6 @@ export const ContactList = () => {
       setEditableContactId(null);
       editedContactsRef.current = {};
       setEditSaveError(false);
-      console.log(`saved`);
     }
   };
 

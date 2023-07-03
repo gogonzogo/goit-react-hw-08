@@ -48,7 +48,6 @@ const authSlice = createSlice({
       }
       )
       .addCase(login.rejected, (state, action) => {
-        console.log(action.payload)
         state.isRefreshing = false;
         Notify.failure('Incorrect email or password');
       }

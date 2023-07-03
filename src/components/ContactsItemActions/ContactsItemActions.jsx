@@ -45,7 +45,6 @@ export function ContactsItemActions({
         return;
       } else if (e.type === 'click') {
         const target = e.target.closest('svg').dataset.testid;
-        console.log('target', target)
         switch (target) {
           case 'EditIcon':
             setOpen(true);

@@ -26,7 +26,7 @@ export function ContactsFilter() {
   return (
     <Box sx={{ width: '100%', marginTop: "20px" }}>
       <TextField
-        label="Filter Name or Number"
+        label="Filter by Name or Number"
         id="outlined-start-adornment"
         sx={{ width: '100%' }}
 

@@ -65,6 +65,7 @@ export function ContactsSort() {
 
   return (
     <Box className={css.sortToggleSection}>
+      <h3>Sort Contacts</h3>
       <Paper
         className={css.sortToggleContainer}
         elevation={4}

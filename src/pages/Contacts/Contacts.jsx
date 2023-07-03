@@ -31,7 +31,7 @@ export const Contacts = () => {
       <h1 className={css.contactsTitle}>{`${user.name} Contacts`}</h1>
 
       {onMount && <Loader />}
-      {contacts.length >= 2 ? (
+      {contacts.length >= 2 && !onMount ? (
         <>
           <PhonebookActions />
           {addContact && <ContactsForm />}
@@ -39,12 +39,12 @@ export const Contacts = () => {
           {sortContacts && <ContactsSort />}
           <ContactList />
         </>
-      ) : contacts.length === 1 ? (
+      ) : contacts.length === 1 && !onMount ? (
         <>
           <ContactsForm />
           <ContactList />
         </>
-      ) : contacts.length < 1 && !isLoading ? (
+      ) : contacts.length < 1 && !onMount ? (
         <>
           <ContactsForm />
           <h5 className={css.noContactsText}>
